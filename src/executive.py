@@ -5,7 +5,7 @@
 var = 4
 
 if var == 5:
-  print("ok")
+    print("ok")
 else:
-  print("no")
+    print("no")
 print('テスト')
