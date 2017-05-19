@@ -54,3 +54,84 @@ Operations to perform:
 Running migrations:
   Applying polls.0001_initial... OK
 ```
+
+### use interactive shell
+
+`$ python manage.py shell`
+```
+>>> from polls.models import Question, Choice   # Import the model classes we just wrote.
+
+# No questions are in the system yet.
+>>> Question.objects.all()
+<QuerySet []>
+
+>>> from django.utils import timezone
+>>> q = Question(question_text="What's new?", pub_date=timezone.now())
+>>> q.save()
+
+>>> q.id
+1
+
+# Access model field values via Python attributes.
+>>> q.question_text
+"What's new?"
+>>> q.pub_date
+datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=<UTC>)
+
+# Change values by changing the attributes, then calling save().
+>>> q.question_text = "What's up?"
+>>> q.save()
+
+# objects.all() displays all the questions in the database.
+>>> Question.objects.all()
+<QuerySet [<Question: Question object>]>
+```
+
+*Override __str__ in each Class*
+
+```
+>>> from polls.models import Question, Choice
+
+>>> Question.objects.all()
+
+>>> Question.objects.filter(id=1)
+>>> Question.objects.filter(question_text__startswith='What')
+
+>>> from django.utils import timezone
+>>> current_year = timezone.now().year
+>>> Question.objects.get(pub_date__year=current_year)
+
+>>> Question.objects.get(id=2)
+Traceback (most recent call last):
+    ...
+    DoesNotExist: Question matching query does not exist.
+
+>>> Question.objects.get(pk=1)
+>>> q = Question.objects.get(pk=1)
+>>> q.was_published_recently()
+True
+
+>>> q = Question.objects.get(pk=1)
+
+# Display any choices from the related object set -- none so far.
+>>> q.choice_set.all()
+<QuerySet []>
+
+>>> q.choice_set.create(choice_text='Not much', votes=0)
+>>> q.choice_set.create(choice_text='The sky', votes=0)
+
+>>> c = q.choice_set.create(choice_text='Just hacking again', votes=0)
+>>> c.question
+<Question: What's up?>
+
+>>> q.choice_set.all()
+<QuerySet [<Choice: Not much>, <Choice: The sky>, <Choice: Just hacking again>]>
+>>> q.choice_set.count()
+3
+
+>>> Choice.objects.filter(question__pub_date__year=current_year)
+<QuerySet [<Choice: Not much>, <Choice: The sky>, <Choice: Just hacking again>]>
+
+>>> c = q.choice_set.filter(choice_text__startswith='Just hacking')
+>>> c.delete()
+```
