@@ -17,7 +17,8 @@ from django.conf.urls import url
 
 from . import views
 
-from polls.views import *
+from polls.views import index, test_method
+
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
