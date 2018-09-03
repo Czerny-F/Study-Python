@@ -1,3 +1,4 @@
+from pprint import pprint
 from flask import Flask, url_for, request, render_template
 
 app = Flask(__name__)
@@ -20,6 +21,19 @@ with app.test_request_context('/hello', method='POST'):
     assert request.path == '/hello'
     assert request.method == 'POST'
     print('Request posted to hello')
+
+
+@app.route('/log')
+def logger():
+    print('LOG: Print Logging')
+    pprint('LOG: Pprint Logging')
+
+    app.logger.debug('A value for debugging')
+    app.logger.info('A info value')
+    app.logger.warning('A warning occurred (%d apples)', 42)
+    app.logger.error('An error occurred')
+
+    return 'Logging...'
 
 
 @app.route('/user/<username>')
