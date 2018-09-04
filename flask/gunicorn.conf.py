@@ -117,10 +117,10 @@ spew = False
 
 daemon = False
 raw_env = [
-    'DJANGO_SECRET_KEY=something',
-    'SPAM=eggs',
+    # 'DJANGO_SECRET_KEY=something',
+    # 'SPAM=eggs',
 ]
-pidfile = None
+pidfile = '/tmp/gunicorn.pid'
 umask = 0
 user = None
 group = None
@@ -138,9 +138,9 @@ tmp_upload_dir = None
 #       A string of "debug", "info", "warning", "error", "critical"
 #
 
-errorlog = '-'
+errorlog = '/tmp/gunicorn.error.log'
 loglevel = 'info'
-accesslog = '-'
+accesslog = '/tmp/gunicorn.access.log'
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 #
