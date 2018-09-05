@@ -1,7 +1,8 @@
-from pprint import pprint
+import logging
 from flask import Flask, url_for, request, render_template
 
 app = Flask(__name__)
+app.logger.setLevel(logging.INFO)
 
 
 @app.route('/')
@@ -26,7 +27,7 @@ with app.test_request_context('/hello', method='POST'):
 @app.route('/log')
 def logger():
     print('LOG: Print Logging')
-    pprint('LOG: Pprint Logging')
+    print(app.logger.level)
 
     app.logger.debug('A value for debugging')
     app.logger.info('A info value')
