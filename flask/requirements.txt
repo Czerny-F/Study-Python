@@ -3,3 +3,4 @@ python-dotenv
 flask-shell-ipython
 gunicorn
 python-memcached
+mysqlclient
