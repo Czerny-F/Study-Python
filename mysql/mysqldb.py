@@ -16,9 +16,9 @@ DBCONF = {
 def routine():
     conn = MySQLdb.connect(**DBCONF)
 
-    # cur = conn.cursor()
-    # cur.execute('SELECT id, name, created_at FROM users')
-    # print(cur.fetchall())
+    cur = conn.cursor()
+    cur.execute('SELECT id, name, created_at FROM users')
+    cur.fetchall()
 
     conn.close()
 
