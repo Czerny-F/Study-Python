@@ -1,4 +1,5 @@
 import time
+from functools import partial
 from sqlalchemy import create_engine
 import MySQLdb.cursors
 
@@ -15,8 +16,9 @@ engine = create_engine(SCHEME, connect_args=DBCONF)
 
 def routine():
     conn = engine.raw_connection()
+    conn.cursor = partial(conn.cursor, MySQLdb.cursors.DictCursor)
 
-    cur = conn.cursor(MySQLdb.cursors.DictCursor)
+    cur = conn.cursor()
     cur.execute('SELECT id, name, created_at FROM users')
     cur.fetchall()
 
